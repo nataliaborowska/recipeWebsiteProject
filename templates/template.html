@@ -1,0 +1,176 @@
+<script id="highReviewsTemplate" type="text/html">
+	<div class="reviewUnit col-4">
+		<div class="reviewUnit__item">
+			<div class="reviewedRecipeImage">
+				<img src='{{recipeAllData.image}}'/>
+			</div>
+			<div class="reviewedRecipeData">
+				<h4>{{recipeAllData.name}}</h4>
+				<div class="reviewedRecipeData__starContainer">
+				</div>
+				<a class='reviewedRecipeDetails' href='#'>see more</a>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="recipeTemplate" type="text/html">
+	<div class='col-6 recipeUnit'>
+		<div class='recipeItem row'>
+			<div class='recipeItem__image col-5'>
+				<img src='{{image}}' alt='recipe image'>
+			</div>
+			<div class='recipeItem__description col-7'>
+				<h3 class='recipeItemTitle'>{{name}}</h3>
+				<div class='details'>
+					<span><i class='fa fa-clock-o' aria-hidden='true'></i>{{preparationTime}}</span>
+			    	<span><i class='fa fa-users' aria-hidden='true'></i>{{servings}}</span>
+			    </div>
+				<p class='shortDescription'>{{shortDescription}}</p>
+				<a class='buttonDetails' href='#'>see more</a>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="detailsTemplate" type="text/html">
+	<div class='detailsContainer'>
+	    <div class='detailsContainer__title'>
+	    	<a href='{{type}}' class='linkBack'>Back to {{type}}</a>
+		    <div class='recipeTitle'>
+		    	<h1>{{name}}</h1>
+	   		</div>
+	    	<div class='basicData'>
+		    <div class='basicData__details'>
+			    <span><i class='fa fa-clock-o' aria-hidden='true'></i>ready in {{preparationTime}}</span>
+			    <span> <i class='fa fa-users' aria-hidden='true'></i>{{ingredients.length}} ingredients</span>
+			   	<span> <i class='fa fa-cutlery' aria-hidden='true'></i>{{servings}} servings</span></div>
+		    </div>
+	    </div>
+	    <div class='detailsContainer__intro row'>
+		    <div class='recipeImage col-6'>
+		    	<img src='{{image-large}}' alt='dish image'>
+		    </div>
+		    <div class='longDescription col-6'>
+		    	<p>{{description}}</p>
+		    </div>
+	    </div>
+	    <div class='detailsContainer__instruction row'>
+		    <div class='ingredients col-4'>
+			    <h3>Ingredients</h3>
+			    <ul class='ingredientsList'>
+				    {{#ingredients}}
+				    <li class='ingredientsList__item'>
+					    {{#.}}
+					    <span>{{quantity}}</span>{{item}}
+					    {{/.}}
+				    </li>
+			    {{/ingredients}}
+			   	</ul>
+		    </div>
+	    	<div class='directions col-8'>
+			    <h3>Directions</h3>
+			    <ol class='directionsList'>
+				    {{#directions}}
+				    <li class='directionsList__item'>{{.}}</li>
+				    {{/directions}}
+			    </ol>
+	    	</div>
+	    </div>
+	    <div class="detailsContainer__form">
+	    	<h3 class="formTitle">Rating</h3>
+	    	<div id="formResponse"></div>
+	    	<form method="post" id="opinionForm">
+	    		<ul>
+	    			<li>
+	    				<span class="errorComment" id="userNameError"></span>
+			    		<input type="text" name="userName" id="userName" class="mandatoryText" placeholder="type in your name"/>
+			    		
+	    			</li>
+	    			<li>
+	    				<span class="errorComment" id="emailError"></span>
+	    				<input type="email" name="email" id="email" placeholder="type in your email"/>
+	    				
+	    			</li>
+	    			<li class="clearfix">
+	    				<span class="errorComment" id="ratingError"></span>
+	    				<div class="rating">
+	    					<span>
+			    				<input type="radio" name="rating" id="rating5" value="5"/>
+			    				<label for="rating5"></label>
+			    			</span>
+	    					<span>
+			    				<input type="radio" name="rating" id="rating4" value="4"/>
+			    				<label for="rating4"></label>
+			    			</span>
+	    					<span>
+			    				<input type="radio" name="rating" id="rating3" value="3"/>
+			    				<label for="rating3"></label>
+			    			</span>
+	    					<span>
+			    				<input type="radio" name="rating" id="rating2" value="2"/>
+			    				<label for="rating2"></label>
+			    			</span>
+	    					<span>
+			    				<input type="radio" name="rating" id="rating1" value="1"/>
+			    				<label for="rating1"></label>
+			    			</span>
+	    				</div>			    		
+	    			</li>
+	    			<li>
+	    				<span class="errorComment" id="opinionError"></span>
+			    		<textarea name="opinion" id="opinion" class="mandatoryText" placeholder="type in your opinion"></textarea>
+			    		
+	    			</li>
+	    			<li>
+	    				<input type="submit" value="submit"/>
+	    			</li>
+	    		</ul>
+	    	</form>
+	    </div>
+	    <div class="detailsContainer__reviews">
+	    	<div class="reviewsContainer"></div>
+	    </div>
+    </div>
+</script>
+
+<script id="reviewTemplate" type="text/html">
+	<div class="reviewBody clearfix">
+		<div class="reviewBody__image">
+			<img src="images/avatar.jpg"/>
+		</div>
+		<div class="reviewBody__dataSection">
+			<div class="reviewerData">
+				<h4>Review by <span>{{userName}}</span></h4>
+				<span class="reviewerEmail">{{email}}</span>
+				<span class="reviewDate">{{daysAgo}}</span>
+			</div>
+			<div class="ratingSection">
+				<div class="starContainer">
+				</div>
+				<div class="opinion">
+					<p>{{opinion}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="galleryTemplate" type="text/html">
+	<li class="categoryList__item">
+		<ul class="recipeList">
+			{{#.}}
+			<li class="recipeList__item col-4">
+				<div class="galleryUnit clearfix">
+					<div class="galleryUnit__image">
+						<img src="{{image}}"/>
+					</div>
+					<div class="galleryUnit__dataSection">
+						<span class="recipeName">{{name}}</span>
+					</div>
+				</div>
+			</li>
+			{{/.}}
+		</ul>
+	</li>
+</script>
